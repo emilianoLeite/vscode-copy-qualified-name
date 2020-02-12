@@ -19,7 +19,15 @@
 				"command": "extension.helloWorld",
 				"title": "Hello World"
 			}
-		]
+    ],
+    "keybindings": [
+      {
+        "command": "extension.helloWorld",
+        "key" : "ctrl+k ctrl+c",
+        "mac": "cmd+k cmd+c",
+        "when": "editorTextFocus && editorLangId == ruby"
+      }
+    ]
 	},
 	"scripts": {
 		"lint": "eslint .",
