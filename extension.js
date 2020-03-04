@@ -20,8 +20,62 @@ function activate(context) {
 	let disposable = vscode.commands.registerCommand('extension.helloWorld', function () {
 		// The code you place here will be executed every time your command is executed
 
-		// Display a message box to the user
-		vscode.window.showInformationMessage('Hello World!');
+
+
+    // Display a message box to the user
+    const currentDocument = vscode.window.activeTextEditor.document
+    const namespaceDefinitions = []
+
+    let condition = true
+    let index = 0
+
+    function isNamespaceDefinition(lineText) {
+      let trimmedLine = lineText.trim()
+
+      return trimmedLine.startsWith('module') || trimmedLine.startsWith('class')
+    }
+
+    function isComment(lineText) {
+      return lineText.trim().startsWith('#')
+    }
+
+    function isRequire(lineText) {
+      return lineText.trim().startsWith('require')
+    }
+
+    while (condition) {
+      let currentLine = currentDocument.lineAt(index)
+      let currentLineContent = currentLine.text
+
+      switch (true) {
+        case isNamespaceDefinition(currentLineContent):
+          vscode.window.showInformationMessage("condition = true")
+          namespaceDefinitions.push(currentLineContent)
+          index++
+          break
+        case currentLine.isEmptyOrWhitespace:
+          vscode.window.showInformationMessage("blank = true")
+          index++
+          break
+        case isComment(currentLineContent):
+          vscode.window.showInformationMessage("comment = true")
+
+          index++
+          break
+        case isRequire(currentLineContent):
+          vscode.window.showInformationMessage("require = true")
+
+          index++
+          break
+        default:
+          vscode.window.showInformationMessage("condition = false")
+          condition = false
+          break
+      }
+
+    }
+
+		vscode.window.showInformationMessage(namespaceDefinitions.join('::'));
 	});
 
 	context.subscriptions.push(disposable);
