@@ -10,15 +10,15 @@ const vscode = require('vscode');
  */
 function activate(context) {
 
-	// Use the console to output diagnostic information (console.log) and errors (console.error)
-	// This line of code will only be executed once when your extension is activated
-	console.log('Congratulations, your extension "vscode-copy-qualified-name" is now active!');
+  // Use the console to output diagnostic information (console.log) and errors (console.error)
+  // This line of code will only be executed once when your extension is activated
+  console.log('Congratulations, your extension "vscode-copy-qualified-name" is now active!');
 
-	// The command has been defined in the package.json file
-	// Now provide the implementation of the command with  registerCommand
-	// The commandId parameter must match the command field in package.json
-	let disposable = vscode.commands.registerCommand('extension.helloWorld', function () {
-		// The code you place here will be executed every time your command is executed
+  // The command has been defined in the package.json file
+  // Now provide the implementation of the command with  registerCommand
+  // The commandId parameter must match the command field in package.json
+  let disposable = vscode.commands.registerCommand('extension.helloWorld', function () {
+    // The code you place here will be executed every time your command is executed
 
     const currentDocument = vscode.window.activeTextEditor.document
     const namespaceDefinitions = []
@@ -29,7 +29,9 @@ function activate(context) {
     function isNamespaceDefinition(lineText) {
       let trimmedLine = lineText.trim()
 
-      return trimmedLine.startsWith('module') || trimmedLine.startsWith('class')
+      return (
+        trimmedLine.startsWith('module') || trimmedLine.startsWith('class')
+      )
     }
 
     function isComment(lineText) {
@@ -40,42 +42,52 @@ function activate(context) {
       return lineText.trim().startsWith('require')
     }
 
+    /**
+     * @param {string[]} namespaceDefinitions
+     */
+    function trimNamespaceKeywords(namespaceDefinitions) {
+      return namespaceDefinitions.map((namespaceDefinition) => {
+        return (namespaceDefinition
+          .replace('class ', '')
+          .replace('module ', '')
+        )
+      })
+    }
+
     while (condition) {
       let currentLine = currentDocument.lineAt(index)
       let currentLineContent = currentLine.text
 
       switch (true) {
         case isNamespaceDefinition(currentLineContent):
-          vscode.window.showInformationMessage("condition = true")
+          // vscode.window.showInformationMessage('condition = true')
           namespaceDefinitions.push(currentLineContent)
           index++
           break
         case currentLine.isEmptyOrWhitespace:
-          vscode.window.showInformationMessage("blank = true")
+          // vscode.window.showInformationMessage('blank = true')
           index++
           break
         case isComment(currentLineContent):
-          vscode.window.showInformationMessage("comment = true")
-
+          // vscode.window.showInformationMessage('comment = true')
           index++
           break
         case isRequire(currentLineContent):
-          vscode.window.showInformationMessage("require = true")
-
+          // vscode.window.showInformationMessage('require = true')
           index++
           break
         default:
-          vscode.window.showInformationMessage("condition = false")
+          // vscode.window.showInformationMessage('condition = false')
           condition = false
           break
       }
-
     }
 
-		vscode.window.showInformationMessage(namespaceDefinitions.join('::'));
-	});
+    const fullyQualifiedClassName = trimNamespaceKeywords(namespaceDefinitions)
+    vscode.window.showInformationMessage(fullyQualifiedClassName.join('::'))
+  })
 
-	context.subscriptions.push(disposable);
+  context.subscriptions.push(disposable);
 }
 exports.activate = activate;
 
@@ -83,6 +95,6 @@ exports.activate = activate;
 function deactivate() {}
 
 module.exports = {
-	activate,
-	deactivate
+  activate,
+  deactivate
 }
