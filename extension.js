@@ -84,8 +84,9 @@ function activate(context) {
       }
     }
 
-    const fullyQualifiedClassName = trimNamespaceKeywords(namespaceDefinitions)
-    vscode.window.showInformationMessage(fullyQualifiedClassName.join('::'))
+    const fullyQualifiedClassName = `::${trimNamespaceKeywords(namespaceDefinitions).join('::')}`
+    vscode.env.clipboard.writeText(fullyQualifiedClassName)
+    vscode.window.showInformationMessage('Copied!')
   })
 
   context.subscriptions.push(disposable);
