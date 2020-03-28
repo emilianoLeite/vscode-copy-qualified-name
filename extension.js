@@ -61,25 +61,20 @@ function activate(context) {
 
       switch (true) {
         case isNamespaceDefinition(currentLineContent):
-          // vscode.window.showInformationMessage('condition = true')
           const nameSpaceWithoutInheritance = currentLineContent.split('<')[0]
           namespaceDefinitions.push(nameSpaceWithoutInheritance)
           index++
           break
         case currentLine.isEmptyOrWhitespace:
-          // vscode.window.showInformationMessage('blank = true')
           index++
           break
         case isComment(currentLineContent):
-          // vscode.window.showInformationMessage('comment = true')
           index++
           break
         case isRequire(currentLineContent):
-          // vscode.window.showInformationMessage('require = true')
           index++
           break
         default:
-          // vscode.window.showInformationMessage('condition = false')
           condition = false
           break
       }
