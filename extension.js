@@ -50,6 +50,7 @@ function activate(context) {
         return (namespaceDefinition
           .replace('class ', '')
           .replace('module ', '')
+        .trim()
         )
       })
     }
