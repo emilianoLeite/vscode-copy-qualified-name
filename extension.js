@@ -48,6 +48,7 @@ function activate(context) {
     function trimNamespaceKeywords(namespaceDefinitions) {
       return namespaceDefinitions.map((namespaceDefinition) => {
         return (namespaceDefinition
+          .split('<')[0]
           .replace('class ', '')
           .replace('module ', '')
           .trim()
@@ -61,8 +62,7 @@ function activate(context) {
 
       switch (true) {
         case isNamespaceDefinition(currentLineContent):
-          const namespaceWithoutInheritance = currentLineContent.split('<')[0]
-          namespaceDefinitions.push(namespaceWithoutInheritance)
+          namespaceDefinitions.push(currentLineContent)
           index++
           break
         case currentLine.isEmptyOrWhitespace:
