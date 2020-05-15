@@ -10,19 +10,19 @@
 		"Other"
 	],
 	"activationEvents": [
-		"onCommand:extension.copyFullQualifiedClassName"
+		"onCommand:extension.copyFullyQualifiedClassName"
 	],
 	"main": "./extension.js",
 	"contributes": {
 		"commands": [
 			{
-				"command": "extension.copyFullQualifiedClassName",
+				"command": "extension.copyFullyQualifiedClassName",
 				"title": "Ruby - Copy full qualified class name"
 			}
     ],
     "keybindings": [
       {
-        "command": "extension.copyFullQualifiedClassName",
+        "command": "extension.copyFullyQualifiedClassName",
         "key" : "ctrl+k ctrl+c",
         "mac": "cmd+k cmd+c",
         "when": "editorTextFocus && editorLangId == ruby"
