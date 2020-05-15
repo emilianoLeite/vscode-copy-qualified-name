@@ -82,7 +82,7 @@ function activate(context) {
 
     const fullyQualifiedClassName = `::${trimNamespaceKeywords(namespaceDefinitions).join('::')}`
     vscode.env.clipboard.writeText(fullyQualifiedClassName)
-    vscode.window.showInformationMessage('Copied!')
+    vscode.window.showInformationMessage(`Copied class ${fullyQualifiedClassName}`)
   })
 
   context.subscriptions.push(disposable);
