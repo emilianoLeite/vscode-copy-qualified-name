@@ -17,7 +17,7 @@
 		"commands": [
 			{
 				"command": "extension.copyFullyQualifiedClassName",
-				"title": "Ruby - Copy full qualified class name"
+				"title": "Ruby - Copy fully qualified class name"
 			}
     ],
     "keybindings": [
